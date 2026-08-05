@@ -49,9 +49,11 @@ const password=document.getElementById("password").value;
 
 try{
 
-await signInWithEmailAndPassword(auth,email,password);
+await signInWithEmailAndPassword(auth, email, password);
 
-window.location.href = "app.html";
+alert("Login realizado");
+
+window.location.href = "pages/app.html";
 
 }catch(error){
 
