@@ -1,8 +1,12 @@
 import { db } from "./firebase.js";
 
 import {
-    doc,
+    collection,
     onSnapshot
+} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+
+import {
+    doc
 } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
 
 // DASHBOARD
@@ -52,5 +56,12 @@ onSnapshot(signalRef, (snapshot) => {
 
     document.querySelector(".buy small").innerHTML =
         signal.trend;
+
+});
+const tradesRef = collection(db, "trades");
+
+onSnapshot(tradesRef, (snapshot) => {
+
+    console.log("Trades encontradas:", snapshot.size);
 
 });
