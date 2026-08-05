@@ -5,6 +5,7 @@ import {
     onSnapshot
 } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
 
+// DASHBOARD
 const dashboardRef = doc(db, "dashboard", "main");
 
 onSnapshot(dashboardRef, (snapshot) => {
@@ -24,5 +25,32 @@ onSnapshot(dashboardRef, (snapshot) => {
     cards[2].innerHTML = data.openTraders;
 
     cards[3].innerHTML = data.winRate + "%";
+
+});
+
+
+// ==========================
+// AI SIGNAL
+// ==========================
+
+const signalRef = doc(db, "signals", "current");
+
+onSnapshot(signalRef, (snapshot) => {
+
+    if (!snapshot.exists()) return;
+
+    const signal = snapshot.data();
+
+    document.querySelector(".buy h3").innerHTML =
+        signal.action + " SIGNAL";
+
+    document.querySelector(".buy strong").innerHTML =
+        signal.pair;
+
+    document.querySelector(".buy p b").innerHTML =
+        signal.confidence + "%";
+
+    document.querySelector(".buy small").innerHTML =
+        signal.trend;
 
 });
