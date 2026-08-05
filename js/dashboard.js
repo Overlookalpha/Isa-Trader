@@ -62,6 +62,26 @@ const tradesRef = collection(db, "trades");
 
 onSnapshot(tradesRef, (snapshot) => {
 
-    console.log("Trades encontradas:", snapshot.size);
+    const list = document.getElementById("tradesList");
+
+    list.innerHTML = "";
+
+    snapshot.forEach((doc) => {
+
+        const trade = doc.data();
+
+        list.innerHTML += `
+            <div class="trade-card">
+                <h3>${trade.action} ${trade.pair}</h3>
+
+                <p>Entry: ${trade.entry}</p>
+
+                <p>Profit: €${trade.profit}</p>
+
+                <p>Status: ${trade.status}</p>
+            </div>
+        `;
+
+    });
 
 });
