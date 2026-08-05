@@ -21,7 +21,7 @@ onSnapshot(dashboardRef, (snapshot) => {
 
     cards[1].innerHTML = "+€" + Number(data.profit).toFixed(2);
 
-    cards[2].innerHTML = data.openTrades;
+    cards[2].innerHTML = data.openTraders;
 
     cards[3].innerHTML = data.winRate + "%";
 
