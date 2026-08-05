@@ -53,7 +53,7 @@ await signInWithEmailAndPassword(auth, email, password);
 
 alert("Login realizado");
 
-window.location.href = "pages/app.html";
+window.location.href = "app.html";
 
 }catch(error){
 
