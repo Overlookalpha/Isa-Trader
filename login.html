@@ -36,21 +36,23 @@ Trade smarter with Artificial Intelligence.
 
 </p>
 
-<form>
+<form id="loginForm">
 
-<input
-type="email"
-placeholder="Email">
+    <input
+        type="email"
+        id="email"
+        placeholder="Email"
+        required>
 
-<input
-type="password"
-placeholder="Password">
+    <input
+        type="password"
+        id="password"
+        placeholder="Password"
+        required>
 
-<button>
-
-Login
-
-</button>
+    <button>
+        Login
+    </button>
 
 </form>
 
@@ -147,3 +149,6 @@ Robot
 </body>
 
 </html>
+
+<script type="module" src="js/firebase.js"></script>
+<script type="module" src="js/auth.js"></script>
