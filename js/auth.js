@@ -16,12 +16,21 @@ if (window.location.pathname.includes("app.html")) {
 
         console.log("Usuário:", user);
 
-        if (!user) {
-            alert("NÃO LOGADO");
-            window.location.href = "../pages/login.html";
-        } else {
-            alert("LOGADO: " + user.email);
-        }
+       if (!user) {
+    window.location.href = "../pages/login.html";
+    return;
+}
+
+const adminEmail = "admin@isatrader.com";
+
+if (user.email !== adminEmail) {
+    alert("Acesso negado.");
+    await signOut(auth);
+    window.location.href = "../pages/login.html";
+    return;
+}
+
+console.log("Administrador autenticado:", user.email);
 
     });
 
