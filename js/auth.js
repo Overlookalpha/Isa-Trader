@@ -51,7 +51,7 @@ try{
 
 await signInWithEmailAndPassword(auth,email,password);
 
-window.location="app.html";
+window.location.href = "pages/app.html";
 
 }catch(error){
 
