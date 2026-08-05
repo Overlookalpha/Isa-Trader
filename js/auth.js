@@ -9,6 +9,18 @@ onAuthStateChanged,
 signOut
 
 } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+// Protege o Dashboard
+if (window.location.pathname.endsWith("app.html")) {
+
+    onAuthStateChanged(auth, (user) => {
+
+        if (!user) {
+            window.location.href = "login.html";
+        }
+
+    });
+
+}
 const loginForm = document.getElementById("loginForm");
 
 if(loginForm){
