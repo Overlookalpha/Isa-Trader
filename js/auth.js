@@ -12,7 +12,7 @@ signOut
 // Protege o Dashboard
 if (window.location.pathname.includes("app.html")) {
 
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
 
         console.log("Usuário:", user);
 
