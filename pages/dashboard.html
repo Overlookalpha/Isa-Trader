@@ -9,147 +9,159 @@
 <title>IsaTrader Dashboard</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
+<link rel="stylesheet" href="../css/style.css">
 <link rel="stylesheet" href="../css/dashboard.css">
 
 </head>
 
 <body>
 
-<div class="sidebar">
+<div class="dashboard">
 
-    <h2>🚀 IsaTrader</h2>
-
-    <a href="#">🏠 Dashboard</a>
-
-    <a href="#">📈 Markets</a>
-
-    <a href="#">🤖 Robot</a>
-
-    <a href="#">🧠 AI</a>
-
-    <a href="#">📊 Analytics</a>
-
-    <a href="#">📜 History</a>
-
-    <a href="#">⚙️ Settings</a>
-
-</div>
-
-
-<div class="content">
-
-<header>
-
-<h1>
-
-Welcome back, Isaías 👋
-
-</h1>
-
-</header>
-
-
-<div class="cards">
-
-<div class="card">
-
-<span>Balance</span>
-
-<h2>€10,000</h2>
-
-</div>
-
-<div class="card">
-
-<span>Profit Today</span>
-
-<h2 class="green">+€126.40</h2>
-
-</div>
-
-<div class="card">
-
-<span>Win Rate</span>
-
-<h2>87%</h2>
-
-</div>
-
-<div class="card">
-
-<span>Robot</span>
-
-<h2>🟢 ACTIVE</h2>
-
-</div>
-
-</div>
-
-
-<div class="chart">
-
-<h2>EUR / USD</h2>
-
-<div class="chart-area">
-
-Chart Preview
-
-</div>
-
-</div>
-
-
-<div class="bottom">
-
-<div class="signals">
-
-<h2>AI Recommendation</h2>
-
-<h1 class="buy">
-
-BUY
-
-</h1>
-
-<p>
-
-Confidence
-
-92%
-
-</p>
-
-</div>
-
-
-<div class="history">
+<aside class="sidebar">
 
 <h2>
-
-Recent Trades
-
+🚀 IsaTrader
 </h2>
 
 <ul>
 
-<li>09:20 BUY +€21</li>
+<li>🏠 Dashboard</li>
 
-<li>11:10 SELL +€16</li>
+<li>📈 Markets</li>
 
-<li>13:40 BUY +€42</li>
+<li>🤖 AI Robot</li>
 
-<li>15:05 BUY +€18</li>
+<li>📊 Analytics</li>
+
+<li>📜 History</li>
+
+<li>⚙️ Settings</li>
 
 </ul>
 
-</div>
+</aside>
+
+<main class="content">
+
+<header class="topbar">
+
+<h1>
+
+Dashboard
+
+</h1>
+
+<div class="profile">
+
+👤 Isaias
 
 </div>
 
+</header>
+<section class="cards">
+
+<div class="card-info">
+
+<span>Account Balance</span>
+
+<h2>€10,000.00</h2>
+
+<small>Available Balance</small>
+
 </div>
+
+<div class="card-info">
+
+<span>Today's Profit</span>
+
+<h2 class="green">+€126.40</h2>
+
+<small>+1.26%</small>
+
+</div>
+
+<div class="card-info">
+
+<span>AI Confidence</span>
+
+<h2>92%</h2>
+
+<small>BUY Signal</small>
+
+</div>
+
+<div class="card-info">
+
+<span>Robot Status</span>
+
+<h2 class="green">ACTIVE</h2>
+
+<small>Running</small>
+
+</div>
+
+</section>
+
+<section class="chart-area">
+
+<h2>EUR/USD Live Chart</h2>
+
+<div class="chart-placeholder">
+
+📈 Trading Chart will appear here
+
+</div>
+
+</section>
+
+<section class="ai-panel">
+
+    <div class="ai-card">
+
+        <h2>🧠 Isa AI Assistant</h2>
+
+        <p>
+            Artificial Intelligence is currently analyzing the Forex market.
+        </p>
+
+        <div class="signal buy">
+
+            <h3>BUY SIGNAL</h3>
+
+            <strong>EUR/USD</strong>
+
+            <p>Confidence: <b>92%</b></p>
+
+            <small>Trend is bullish. Price is above the moving averages.</small>
+
+        </div>
+
+        <div class="signal sell">
+
+            <h3>SELL SIGNAL</h3>
+
+            <strong>GBP/USD</strong>
+
+            <p>Confidence: <b>67%</b></p>
+
+            <small>Weak bearish momentum detected.</small>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+</div>
+
+<script src="../js/dashboard.js"></script>
 
 </body>
 
