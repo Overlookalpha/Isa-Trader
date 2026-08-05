@@ -26,6 +26,11 @@ if (window.location.pathname.endsWith("/pages/app.html")) {
         }
 
         console.log("Administrador autenticado:", user.email);
+        const userName = document.getElementById("userName");
+
+if (userName) {
+    userName.innerHTML = "👤 " + user.email;
+}
 
     });
 
