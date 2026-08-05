@@ -294,3 +294,47 @@ flex-direction:column;
 }
 
 }
+
+.stats{
+
+    padding:90px 8%;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:30px;
+
+}
+
+.stat{
+
+    background:white;
+    border-radius:20px;
+    padding:40px;
+    text-align:center;
+    box-shadow:0 15px 30px rgba(0,0,0,.06);
+
+}
+
+.stat h1{
+
+    font-size:48px;
+    color:#00b86b;
+    margin-bottom:10px;
+
+}
+
+.stat p{
+
+    color:#666;
+    font-size:18px;
+
+}
+
+@media(max-width:700px){
+
+.stats{
+
+grid-template-columns:1fr 1fr;
+
+}
+
+}
