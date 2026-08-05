@@ -10,12 +10,17 @@ signOut
 
 } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
 // Protege o Dashboard
-if (window.location.pathname.endsWith("app.html")) {
+if (window.location.pathname.includes("app.html")) {
 
     onAuthStateChanged(auth, (user) => {
 
+        console.log("Usuário:", user);
+
         if (!user) {
-            window.location.href = "login.html";
+            alert("NÃO LOGADO");
+            window.location.href = "../pages/login.html";
+        } else {
+            alert("LOGADO: " + user.email);
         }
 
     });
