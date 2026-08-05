@@ -8,7 +8,7 @@ onAuthStateChanged,
 
 signOut
 
-} from "https://www.gstatic.com/firebasejs/12.7.1/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
 const loginForm = document.getElementById("loginForm");
 
 if(loginForm){
