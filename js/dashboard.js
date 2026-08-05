@@ -1,30 +1,28 @@
+import { db } from "./firebase.js";
 
-const dashboard = {
+import {
+    doc,
+    onSnapshot
+} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
 
-    balance:10000,
+const dashboardRef = doc(db, "dashboard", "main");
 
-    profit:126.40,
+onSnapshot(dashboardRef, (snapshot) => {
 
-    ai:92,
+    if (!snapshot.exists()) return;
 
-    status:"ACTIVE"
+    const data = snapshot.data();
 
-};
+    const cards = document.querySelectorAll(".card-info h2");
 
-function updateCards(){
+    if (cards.length < 4) return;
 
-    const cards=document.querySelectorAll(".card-info h2");
+    cards[0].innerHTML = "€" + Number(data.balance).toLocaleString();
 
-    if(cards.length<4) return;
+    cards[1].innerHTML = "+€" + Number(data.profit).toFixed(2);
 
-    cards[0].innerHTML="€"+dashboard.balance.toLocaleString();
+    cards[2].innerHTML = data.openTrades;
 
-    cards[1].innerHTML="+€"+dashboard.profit.toFixed(2);
+    cards[3].innerHTML = data.winRate + "%";
 
-    cards[2].innerHTML=dashboard.ai+"%";
-
-    cards[3].innerHTML=dashboard.status;
-
-}
-
-updateCards();
+});
