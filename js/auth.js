@@ -26,7 +26,7 @@ const adminEmail = "admin@isatrader.com";
 if (user.email !== adminEmail) {
     alert("Acesso negado.");
     await signOut(auth);
-    window.location.href = "../pages/login.html";
+    window.location.href = "./login.html";
     return;
 }
 
