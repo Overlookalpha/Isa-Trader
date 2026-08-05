@@ -17,7 +17,7 @@ if (window.location.pathname.includes("app.html")) {
         console.log("Usuário:", user);
 
        if (!user) {
-    window.location.href = "../pages/login.html";
+    window.location.href = "../login.html";
     return;
 }
 
