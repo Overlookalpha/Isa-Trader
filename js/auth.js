@@ -1,88 +1,69 @@
 import { auth } from "./firebase.js";
 
 import {
-
-signInWithEmailAndPassword,
-
-onAuthStateChanged,
-
-signOut
-
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut
 } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
-// Protege o Dashboard
-if (window.location.pathname.includes("app.html")) {
-
-    onAuthStateChanged(auth, async (user) => {
-
-        console.log("Usuário:", user);
-
-       if (!user) {
-    window.location.href = "../login.html";
-    return;
-}
 
 const adminEmail = "admin@isatrader.com";
 
-if (user.email !== adminEmail) {
-    alert("Acesso negado.");
-    await signOut(auth);
-    window.location.href = "./login.html";
-    return;
-}
+// Protege apenas o app.html
+if (window.location.pathname.endsWith("/pages/app.html")) {
 
-console.log("Administrador autenticado:", user.email);
+    onAuthStateChanged(auth, async (user) => {
+
+        if (!user) {
+            window.location.href = "login.html";
+            return;
+        }
+
+        if (user.email !== adminEmail) {
+            alert("Acesso negado.");
+            await signOut(auth);
+            window.location.href = "login.html";
+            return;
+        }
+
+        console.log("Administrador autenticado:", user.email);
 
     });
 
 }
+
+// Login
 const loginForm = document.getElementById("loginForm");
 
-if(loginForm){
+if (loginForm) {
 
-loginForm.addEventListener("submit", async(e)=>{
+    loginForm.addEventListener("submit", async (e) => {
 
-e.preventDefault();
+        e.preventDefault();
 
-const email=document.getElementById("email").value;
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
 
-const password=document.getElementById("password").value;
+        try {
 
-try{
+            await signInWithEmailAndPassword(auth, email, password);
 
-await signInWithEmailAndPassword(auth, email, password);
+            window.location.href = "app.html";
 
-alert("Login realizado");
+        } catch (error) {
 
-window.location.href = "app.html";
+            alert(error.message);
 
-}catch(error){
+        }
 
-alert(error.message);
-
-}
-
-});
-
-onAuthStateChanged(auth,(user)=>{
-
-if(user){
-
-console.log("Usuário logado:",user.email);
-
-}else{
-
-console.log("Nenhum usuário logado.");
+    });
 
 }
 
-});
+// Logout
+window.logout = async () => {
 
-window.logout=async()=>{
+    await signOut(auth);
 
-await signOut(auth);
-
-window.location="../login.html";
+    window.location.href = "login.html";
 
 };
-
-}
