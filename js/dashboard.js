@@ -102,7 +102,7 @@ historyList.innerHTML += `
 
         <div>
 
-            <span class="${trade.action==="BUY"?"buy":"sell"}">
+            <span style="color:${trade.action==="BUY" ? "#22c55e" : "#ef4444"};font-weight:bold;">
 
                 ${trade.action}
 
