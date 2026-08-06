@@ -105,7 +105,7 @@ if (trade.status !== "CLOSED") return;
     </div>
     `;
 
-}
+});
     
 
 });
