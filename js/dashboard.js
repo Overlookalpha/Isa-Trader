@@ -70,7 +70,7 @@ const historyList = document.getElementById("historyList");
     snapshot.forEach((doc) => {
 
         const trade = doc.data();
-      if (trade.status !== "OPEN") return;
+      if (trade.status === "OPEN") {
         
         list.innerHTML += `
 <div class="trade-card">
@@ -91,7 +91,8 @@ const historyList = document.getElementById("historyList");
 
 </div>
 `;
-if (trade.status !== "CLOSED") return;
+      }
+if (trade.status === "CLOSED") {
 
     historyList.innerHTML += `
     <div class="trade-card">
@@ -104,7 +105,7 @@ if (trade.status !== "CLOSED") return;
 
     </div>
     `;
-
+}
 });
     
 
