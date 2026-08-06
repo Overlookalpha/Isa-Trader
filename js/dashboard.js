@@ -63,13 +63,15 @@ const tradesRef = collection(db, "trades");
 onSnapshot(tradesRef, (snapshot) => {
 
     const list = document.getElementById("tradesList");
-
+const historyList = document.getElementById("historyList");
+    
     list.innerHTML = "";
-
+     historyList.innerHTML = "";
     snapshot.forEach((doc) => {
 
         const trade = doc.data();
-
+      if (trade.status !== "OPEN") return;
+        
         list.innerHTML += `
 <div class="trade-card">
 
@@ -89,7 +91,21 @@ onSnapshot(tradesRef, (snapshot) => {
 
 </div>
 `;
+if (trade.status !== "CLOSED") return;
 
+    historyList.innerHTML += `
+    <div class="trade-card">
+
+        <h3>${trade.action} ${trade.pair}</h3>
+
+        <p><strong>Profit:</strong> €${trade.profit}</p>
+
+        <p><strong>Status:</strong> CLOSED</p>
+
+    </div>
+    `;
+
+}
     });
 
 });
