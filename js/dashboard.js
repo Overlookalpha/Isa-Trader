@@ -73,7 +73,9 @@ onSnapshot(tradesRef, (snapshot) => {
         list.innerHTML += `
 <div class="trade-card">
 
-    <h3>${trade.action} ${trade.pair}</h3>
+    <h3 style="color:${trade.action === 'BUY' ? '#22c55e' : '#ef4444'}">
+    ${trade.action} ${trade.pair}
+</h3>
 
     <p><strong>Entry:</strong> ${trade.entry}</p>
 
