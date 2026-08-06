@@ -1,4 +1,38 @@
-document.getElementById("eurusd").innerHTML = "1.1552";
-document.getElementById("gbpusd").innerHTML = "1.3578";
-document.getElementById("gold").innerHTML = "3362.45";
-document.getElementById("btc").innerHTML = "117420";
+import { db } from "./firebase.js";
+
+import {
+  doc,
+  onSnapshot
+} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+
+// EUR/USD
+onSnapshot(doc(db, "prices", "EURUSD"), (docSnap) => {
+    if (docSnap.exists()) {
+        document.getElementById("eurusd").innerHTML =
+            docSnap.data().price;
+    }
+});
+
+// GBP/USD
+onSnapshot(doc(db, "prices", "GBPUSD"), (docSnap) => {
+    if (docSnap.exists()) {
+        document.getElementById("gbpusd").innerHTML =
+            docSnap.data().price;
+    }
+});
+
+// GOLD
+onSnapshot(doc(db, "prices", "XAUUSD"), (docSnap) => {
+    if (docSnap.exists()) {
+        document.getElementById("gold").innerHTML =
+            docSnap.data().price;
+    }
+});
+
+// BITCOIN
+onSnapshot(doc(db, "prices", "BTCUSD"), (docSnap) => {
+    if (docSnap.exists()) {
+        document.getElementById("btc").innerHTML =
+            docSnap.data().price;
+    }
+});
