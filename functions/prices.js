@@ -18,7 +18,7 @@ exports.updateEURUSD = onRequest(
     try {
       const apiKey = twelveDataApiKey.value();
 
-      const response = await fetch(
+      const response = await fetch( 
         `https://api.twelvedata.com/price?symbol=EUR/USD&apikey=${apiKey}`
       );
 
