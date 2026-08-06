@@ -24,3 +24,4 @@ markets.forEach(symbol => {
             <h2 id="${symbol}">Loading...</h2>
         </div>
     `;
+});
