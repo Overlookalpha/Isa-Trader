@@ -94,17 +94,92 @@ const historyList = document.getElementById("historyList");
       }
 if (trade.status === "CLOSED") {
 
-    historyList.innerHTML += `
-    <div class="trade-card">
+historyList.innerHTML += `
 
-        <h3>${trade.action} ${trade.pair}</h3>
+<div class="trade-card closed-card">
 
-        <p><strong>Profit:</strong> €${trade.profit}</p>
+    <div class="trade-top">
 
-        <p><strong>Status:</strong> CLOSED</p>
+        <div>
+
+            <span class="${trade.action==="BUY"?"buy":"sell"}">
+
+                ${trade.action}
+
+            </span>
+
+            <strong>${trade.pair}</strong>
+
+        </div>
+
+        <span class="closed">
+
+            CLOSED
+
+        </span>
 
     </div>
-    `;
+
+    <div class="trade-grid">
+
+        <div>
+
+            <small>Entry</small>
+
+            <strong>${trade.entry}</strong>
+
+        </div>
+
+        <div>
+
+            <small>Exit</small>
+
+            <strong>${trade.exitPrice ?? "-"}</strong>
+
+        </div>
+
+        <div>
+
+            <small>Stop Loss</small>
+
+            <strong>${trade.sl}</strong>
+
+        </div>
+
+        <div>
+
+            <small>Take Profit</small>
+
+            <strong>${trade.tp}</strong>
+
+        </div>
+
+        <div>
+
+            <small>Profit</small>
+
+            <strong class="${trade.profit>=0?"profit":"loss"}">
+
+                €${Number(trade.profit).toFixed(2)}
+
+            </strong>
+
+        </div>
+
+        <div>
+
+            <small>Risk</small>
+
+            <strong>${trade.risk ?? "-"}</strong>
+
+        </div>
+
+    </div>
+
+</div>
+
+`;
+
 }
 });
     
