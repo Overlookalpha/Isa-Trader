@@ -106,6 +106,6 @@ if (trade.status !== "CLOSED") return;
     `;
 
 }
-    });
+    
 
 });
