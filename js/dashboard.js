@@ -83,7 +83,7 @@ onSnapshot(tradesRef, (snapshot) => {
 
     <p><strong>Profit:</strong> €${trade.profit}</p>
 
-    <p><strong>Status:</strong> ${trade.status}</p>
+    <p><strong>Status:</strong> <span style="color:${trade.status === 'OPEN' ? '#22c55e' : '#ef4444'};font-weight:bold;">${trade.status}</span></p>
 
 </div>
 `;
