@@ -41,9 +41,83 @@
 
 <main class="content">
 
-<h1>📈 Live Markets</h1>
+<header class="topbar">
+    <h1>📈 Live Markets</h1>
+</header>
 
-<div id="markets"></div>
+<section class="chart-area">
+
+    <h2>EUR/USD Live Chart</h2>
+
+   <div class="tradingview-widget-container">
+
+  <div id="tradingview_chart"></div>
+
+  <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+
+  <script>
+
+    new TradingView.widget({
+
+      "container_id": "tradingview_chart",
+
+      "autosize": true,
+
+      "symbol": "FX:EURUSD",
+
+      "interval": "15",
+
+      "timezone": "Europe/London",
+
+      "theme": "dark",
+
+      "style": "1",
+
+      "locale": "en",
+
+      "toolbar_bg": "#1e293b",
+
+      "enable_publishing": false,
+
+      "hide_top_toolbar": false,
+
+      "allow_symbol_change": true
+
+    });
+
+  </script>
+
+</div>
+
+</section>
+
+<section class="cards">
+
+    <div class="card-info">
+        <span>EUR/USD</span>
+        <h2 id="eurusd">Loading...</h2>
+        <small>Live Price</small>
+    </div>
+
+    <div class="card-info">
+        <span>GBP/USD</span>
+        <h2 id="gbpusd">Loading...</h2>
+        <small>Live Price</small>
+    </div>
+
+    <div class="card-info">
+        <span>XAU/USD</span>
+        <h2 id="gold">Loading...</h2>
+        <small>Gold</small>
+    </div>
+
+    <div class="card-info">
+        <span>BTC/USD</span>
+        <h2 id="btc">Loading...</h2>
+        <small>Bitcoin</small>
+    </div>
+
+</section>
 
 </main>
 
