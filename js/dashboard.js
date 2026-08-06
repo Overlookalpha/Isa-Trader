@@ -71,16 +71,22 @@ onSnapshot(tradesRef, (snapshot) => {
         const trade = doc.data();
 
         list.innerHTML += `
-            <div class="trade-card">
-                <h3>${trade.action} ${trade.pair}</h3>
+<div class="trade-card">
 
-                <p>Entry: ${trade.entry}</p>
+    <h3>${trade.action} ${trade.pair}</h3>
 
-                <p>Profit: €${trade.profit}</p>
+    <p><strong>Entry:</strong> ${trade.entry}</p>
 
-                <p>Status: ${trade.status}</p>
-            </div>
-        `;
+    <p><strong>Stop Loss:</strong> ${trade.sl}</p>
+
+    <p><strong>Take Profit:</strong> ${trade.tp}</p>
+
+    <p><strong>Profit:</strong> €${trade.profit}</p>
+
+    <p><strong>Status:</strong> ${trade.status}</p>
+
+</div>
+`;
 
     });
 
