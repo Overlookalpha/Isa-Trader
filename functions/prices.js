@@ -49,7 +49,7 @@ await db
         data,
       });
     } catch (error) {
-      console.error(error);
+      console.error(error); 
       res.status(500).send(error.message);
     }
   }
