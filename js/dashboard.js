@@ -13,6 +13,11 @@ import {
 const dashboardRef = doc(db, "dashboard", "main");
 
 onSnapshot(dashboardRef, (snapshot) => {
+    console.log("Quantidade de trades:", snapshot.size);
+
+snapshot.forEach(doc => {
+    console.log(doc.id, doc.data());
+});
 
     if (!snapshot.exists()) return;
 
