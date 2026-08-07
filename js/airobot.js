@@ -3,7 +3,7 @@ import { db } from "./firebase.js";
 
 import {
   doc,
-  onSnapshot
+  onSnapshot   
 } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
 
 // Todos os preços ficarão armazenados aqui
