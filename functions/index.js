@@ -31,4 +31,4 @@ setGlobalOptions({ maxInstances: 10 });
 //   response.send("Hello from Firebase!");
 // });
 exports.updateEURUSD = require("./prices").updateEURUSD;
-exports.updateAllMarkets = require("./prices").updateAllMarkets;
+exports.updateHistory = require("./history").updateHistory;
