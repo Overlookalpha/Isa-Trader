@@ -9,6 +9,7 @@ import {
 
 // Todos os preços ficarão armazenados aqui
 export const marketData = {
+
   EURUSD: null,
   GBPUSD: null,
   XAUUSD: null,
@@ -17,11 +18,12 @@ export const marketData = {
   ultimoEURUSD: null,
 
   history: {
-    EURUSD: [],
-    GBPUSD: [],
-    XAUUSD: [],
-    BTCUSD: []
+      EURUSD: [],
+      GBPUSD: [],
+      XAUUSD: [],
+      BTCUSD: []
   }
+
 };
 
 // Monitora um ativo
@@ -77,42 +79,116 @@ function calcularEMA(precos, periodo) {
 }
 async function analisarMercado(symbol) {
 
-  const ativo = marketData[symbol];
+    const ativo = marketData[symbol];
+    if (!ativo) return;
 
-  if (!ativo) return;
+    const historico = marketData.history[symbol];
+    const preco = ativo.price;
 
-  const preco = ativo.price;
-const ema9 = calcularEMA(marketData.history[symbol], 9);
-const ema21 = calcularEMA(marketData.history[symbol], 21);
+    const ema9 = calcularEMA(historico, 9);
+    const ema21 = calcularEMA(historico, 21);
 
-if (ema9 && ema21) {
-    console.log(`${symbol} | EMA9: ${ema9.toFixed(5)} | EMA21: ${ema21.toFixed(5)}`);
-}
+    if (!ema9 || !ema21) return;
 
-  let sinal = "HOLD";
+    //============================
+    // TENDÊNCIA
+    //============================
 
-  if (!ema9 || !ema21) {
-    return;
-}
+    let sinal = "HOLD";
 
-if (ema9 > ema21) {
-    sinal = "BUY";
-} else {
-    sinal = "SELL";
-}
+    if (ema9 > ema21) {
+        sinal = "BUY";
+    } else if (ema9 < ema21) {
+        sinal = "SELL";
+    }
 
-  console.log(symbol, "→", sinal);
-await setDoc(
-  doc(db, "signals", "current"),
-  {
-    action: sinal,
-    pair: symbol,
-    price: preco,
-    confidence: 70,
-    trend: sinal === "BUY" ? "Bullish" : "Bearish",
-    updated: new Date()
-  }
-);
+    //============================
+    // FORÇA DA TENDÊNCIA
+    //============================
+
+    const distanciaEMA = Math.abs(ema9 - ema21);
+
+    let confidence = Math.min(
+        95,
+        Math.round(distanciaEMA * 100000)
+    );
+
+    if (confidence < 55)
+        confidence = 55;
+
+    //============================
+    // RSI (simples)
+    //============================
+
+    let rsi = 50;
+
+    if (historico.length > 15) {
+
+        let ganhos = 0;
+        let perdas = 0;
+
+        for (let i = historico.length - 14; i < historico.length; i++) {
+
+            const diff = historico[i] - historico[i - 1];
+
+            if (diff > 0)
+                ganhos += diff;
+            else
+                perdas += Math.abs(diff);
+        }
+
+        if (perdas === 0)
+            rsi = 100;
+        else {
+
+            const rs = ganhos / perdas;
+
+            rsi = 100 - (100 / (1 + rs));
+
+        }
+
+    }
+
+    //============================
+    // FILTRO RSI
+    //============================
+
+    if (sinal === "BUY" && rsi > 70)
+        confidence -= 15;
+
+    if (sinal === "SELL" && rsi < 30)
+        confidence -= 15;
+
+    confidence = Math.max(confidence, 50);
+
+    //============================
+    // SALVA NO FIRESTORE
+    //============================
+
+    await setDoc(doc(db, "signals", "current"), {
+
+        pair: symbol,
+
+        action: sinal,
+
+        price: preco,
+
+        confidence,
+
+        trend: sinal === "BUY" ? "Bullish" : "Bearish",
+
+        ema9,
+
+        ema21,
+
+        rsi,
+
+        updated: new Date()
+
+    });
+
+    console.log("🤖", symbol, sinal, confidence + "%", "RSI:", rsi.toFixed(1));
+
 }
 // Inicia o robô
 export function iniciarAIRobot() {
