@@ -65,12 +65,14 @@ function analisarMercado(symbol) {
 
   console.log(symbol, "→", sinal);
 await setDoc(
-  doc(db, "signals", symbol),
+  doc(db, "signals", "current"),
   {
-    symbol,
-    signal: sinal,
+    action: sinal,
+    pair: symbol,
     price: preco,
-    updatedAt: new Date()
+    confidence: 70,
+    trend: sinal === "BUY" ? "Bullish" : "Bearish",
+    updated: new Date()
   }
 );
 }
