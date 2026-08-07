@@ -47,7 +47,7 @@ function monitorarAtivo(symbol) {
   });
 
 }
-function analisarMercado(symbol) {
+async function analisarMercado(symbol) {
 
   const ativo = marketData[symbol];
 
