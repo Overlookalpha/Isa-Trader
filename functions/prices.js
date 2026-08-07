@@ -28,11 +28,21 @@ exports.updateEURUSD = onRequest(
         throw new Error(data.message);
       }
 
-      await db.collection("prices").doc("EURUSD").set({
-        symbol: "EUR/USD",
-        price: Number(data.price),
-        updatedAt: admin.firestore.FieldValue.serverTimestamp(),
-      });
+      const preco = {
+  symbol: "EUR/USD",
+  price: Number(data.price),
+  updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+};
+
+// Atualiza o preço atual
+await db.collection("prices").doc("EURUSD").set(preco);
+
+// Salva um registro no histórico
+await db
+  .collection("history")
+  .doc("EURUSD")
+  .collection("ticks")
+  .add(preco);
 
       res.send({
         success: true,
