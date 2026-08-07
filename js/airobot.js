@@ -2,8 +2,9 @@
 import { db } from "./firebase.js";
 
 import {
-  doc,
-  onSnapshot   
+    doc,
+    onSnapshot,
+    setDoc
 } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
 
 // Todos os preços ficarão armazenados aqui
@@ -63,7 +64,15 @@ function analisarMercado(symbol) {
   }
 
   console.log(symbol, "→", sinal);
-
+await setDoc(
+  doc(db, "signals", symbol),
+  {
+    symbol,
+    signal: sinal,
+    price: preco,
+    updatedAt: new Date()
+  }
+);
 }
 // Inicia o robô
 export function iniciarAIRobot() {
