@@ -65,7 +65,17 @@ onSnapshot(signalRef, (snapshot) => {
 });
 const tradesRef = collection(db, "trades");
 
-onSnapshot(tradesRef, (snapshot) => {
+onSnapshot(
+    tradesRef,
+    (snapshot) => {
+        console.log(snapshot);
+        console.log(snapshot.constructor.name);
+        console.log(snapshot.size);
+    },
+    (error) => {
+        console.error("Erro Firestore:", error);
+    }
+);
 
     const list = document.getElementById("tradesList");
 const historyList = document.getElementById("historyList");
