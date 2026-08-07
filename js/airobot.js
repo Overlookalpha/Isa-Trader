@@ -24,7 +24,7 @@ function monitorarAtivo(symbol) {
     if (!snapshot.exists()) return;
 
     marketData[symbol] = snapshot.data();
-
+    analisarMercado(symbol);
     if (symbol === "EURUSD") {
 
   if (marketData.ultimoEURUSD !== null) {
@@ -46,7 +46,15 @@ function monitorarAtivo(symbol) {
   });
 
 }
+function analisarMercado(symbol) {
 
+  const ativo = marketData[symbol];
+
+  if (!ativo) return;
+
+  console.log("Analisando", symbol, ativo.price);
+
+}
 // Inicia o robô
 export function iniciarAIRobot() {
 
