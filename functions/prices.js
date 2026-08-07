@@ -37,7 +37,7 @@ exports.updateEURUSD = onRequest(
 // Atualiza o preço atual
 await db.collection("prices").doc("EURUSD").set(preco);
 
-// Salva um registro no histórico
+// Salva um registro no histórico   
 await db
   .collection("history")
   .doc("EURUSD")
