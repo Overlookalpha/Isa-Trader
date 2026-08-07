@@ -14,7 +14,14 @@ export const marketData = {
   XAUUSD: null,
   BTCUSD: null,
 
-  ultimoEURUSD: null
+  ultimoEURUSD: null,
+
+  history: {
+    EURUSD: [],
+    GBPUSD: [],
+    XAUUSD: [],
+    BTCUSD: []
+  }
 };
 
 // Monitora um ativo
@@ -25,6 +32,12 @@ function monitorarAtivo(symbol) {
     if (!snapshot.exists()) return;
 
     marketData[symbol] = snapshot.data();
+    marketData.history[symbol].push(snapshot.data().price);
+
+// Mantém apenas os últimos 200 preços
+if (marketData.history[symbol].length > 200) {
+    marketData.history[symbol].shift();
+}
     analisarMercado(symbol);
     if (symbol === "EURUSD") {
 
@@ -47,6 +60,21 @@ function monitorarAtivo(symbol) {
   });
 
 }
+function calcularEMA(precos, periodo) {
+
+    if (precos.length < periodo) return null;
+
+    const k = 2 / (periodo + 1);
+
+    let ema = precos[0];
+
+    for (let i = 1; i < precos.length; i++) {
+        ema = precos[i] * k + ema * (1 - k);
+    }
+
+    return ema;
+
+}
 async function analisarMercado(symbol) {
 
   const ativo = marketData[symbol];
@@ -54,14 +82,24 @@ async function analisarMercado(symbol) {
   if (!ativo) return;
 
   const preco = ativo.price;
+const ema9 = calcularEMA(marketData.history[symbol], 9);
+const ema21 = calcularEMA(marketData.history[symbol], 21);
+
+if (ema9 && ema21) {
+    console.log(`${symbol} | EMA9: ${ema9.toFixed(5)} | EMA21: ${ema21.toFixed(5)}`);
+}
 
   let sinal = "HOLD";
 
-  if (preco > 1.15) {
+  if (!ema9 || !ema21) {
+    return;
+}
+
+if (ema9 > ema21) {
     sinal = "BUY";
-  } else {
+} else {
     sinal = "SELL";
-  }
+}
 
   console.log(symbol, "→", sinal);
 await setDoc(
