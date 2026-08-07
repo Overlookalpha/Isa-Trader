@@ -100,7 +100,19 @@ new TradingView.widget({
 </main>
 
 </div>
+<script>
+setInterval(async () => {
 
+    try {
+
+        await fetch("COLE_AQUI_A_URL_DA_SUA_FUNCTION");
+
+    } catch (e) {
+        console.log(e);
+    }
+
+}, 5000);
+</script>
 <script type="module" src="../js/livemarkets.js"></script>
 
 </body>
