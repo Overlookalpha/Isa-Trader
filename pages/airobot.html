@@ -120,8 +120,44 @@ Aguardando análise...
 <script type="module">
 
 import { iniciarAIRobot } from "../js/airobot.js";
+import { db } from "../js/firebase.js";
+
+import {
+    doc,
+    onSnapshot
+} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
 
 iniciarAIRobot();
+
+onSnapshot(doc(db,"signals","current"),(snap)=>{
+
+    if(!snap.exists()) return;
+
+    const d = snap.data();
+
+    document.getElementById("pair").textContent = d.pair;
+    document.getElementById("signal").textContent = d.action;
+    document.getElementById("confidence").textContent = d.confidence + "%";
+    document.getElementById("trend").textContent = d.trend;
+
+    document.getElementById("ema9").textContent =
+        d.ema9 ? d.ema9.toFixed(5) : "---";
+
+    document.getElementById("ema21").textContent =
+        d.ema21 ? d.ema21.toFixed(5) : "---";
+
+    document.getElementById("rsi").textContent =
+        d.rsi ? d.rsi.toFixed(1) : "---";
+
+    document.getElementById("robotLog").innerHTML = `
+        Última análise:<br><br>
+        ${d.action} ${d.pair}<br>
+        Preço: ${d.price}<br>
+        Confiança: ${d.confidence}%<br>
+        RSI: ${d.rsi ? d.rsi.toFixed(1) : "--"}
+    `;
+
+});
 
 </script>
 
