@@ -2,7 +2,7 @@ const { onRequest } = require("firebase-functions/v2/https");
 const { defineSecret } = require("firebase-functions/params");
 const admin = require("firebase-admin");
 
-if (!admin.apps.length) {
+if (!admin.apps.length) {  
   admin.initializeApp();
 }
 
