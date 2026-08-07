@@ -23,7 +23,7 @@ function monitorarAtivo(symbol) {
 
     marketData[symbol] = snapshot.data();
 
-    console.log(${symbol}:, marketData[symbol]);
+    console.log(`${symbol}:`, marketData[symbol]);
 
   });
 
