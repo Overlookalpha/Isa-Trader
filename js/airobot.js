@@ -11,7 +11,9 @@ export const marketData = {
   EURUSD: null,
   GBPUSD: null,
   XAUUSD: null,
-  BTCUSD: null
+  BTCUSD: null,
+
+  ultimoEURUSD: null
 };
 
 // Monitora um ativo
@@ -22,6 +24,22 @@ function monitorarAtivo(symbol) {
     if (!snapshot.exists()) return;
 
     marketData[symbol] = snapshot.data();
+
+    if (symbol === "EURUSD") {
+
+  if (marketData.ultimoEURUSD !== null) {
+
+    if (marketData.EURUSD.price > marketData.ultimoEURUSD) {
+      console.log("🟢 BUY");
+    } else if (marketData.EURUSD.price < marketData.ultimoEURUSD) {
+      console.log("🔴 SELL");
+    }
+
+  }
+
+  marketData.ultimoEURUSD = marketData.EURUSD.price;
+
+}
 
     console.log(`${symbol}:`, marketData[symbol]);
 
