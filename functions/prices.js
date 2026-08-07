@@ -54,3 +54,46 @@ await db
     }
   }
 );
+exports.updateAllMarkets = onRequest(
+  {
+    secrets: [twelveDataApiKey],
+  },
+  async (req, res) => {
+
+    const ativos = [
+      { api: "EUR/USD", doc: "EURUSD" },
+      { api: "GBP/USD", doc: "GBPUSD" },
+      { api: "XAU/USD", doc: "XAUUSD" },
+      { api: "BTC/USD", doc: "BTCUSD" }
+    ];
+
+    for (const ativo of ativos) {
+
+      const response = await fetch(
+        `https://api.twelvedata.com/price?symbol=${ativo.api}&apikey=${twelveDataApiKey.value()}`
+      );
+
+      const data = await response.json();
+
+      if (!data.price) continue;
+
+      const preco = {
+        symbol: ativo.api,
+        price: Number(data.price),
+        updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+      };
+
+      await db.collection("prices").doc(ativo.doc).set(preco);
+
+      await db.collection("history")
+        .doc(ativo.doc)
+        .collection("ticks")
+        .add(preco);
+    }
+
+    res.send({
+      success: true
+    });
+
+  }
+);
