@@ -87,7 +87,7 @@ async function analisarMercado(symbol) {
 
     const ema9 = calcularEMA(historico, 9);
     const ema21 = calcularEMA(historico, 21);
-
+console.log(symbol, "Histórico:", historico.length);
     if (!ema9 || !ema21) return;
 
     //============================
