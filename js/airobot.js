@@ -52,7 +52,17 @@ function analisarMercado(symbol) {
 
   if (!ativo) return;
 
-  console.log("Analisando", symbol, ativo.price);
+  const preco = ativo.price;
+
+  let sinal = "HOLD";
+
+  if (preco > 1.15) {
+    sinal = "BUY";
+  } else {
+    sinal = "SELL";
+  }
+
+  console.log(symbol, "→", sinal);
 
 }
 // Inicia o robô
