@@ -1,5 +1,5 @@
 import { db } from "./firebase.js";
-
+console.log("Dashboard.js carregado!");
 import {
     doc,
     collection,
