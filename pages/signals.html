@@ -1,1 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>ISA Trader - Signals</title>
+
+<style>
+
+body{
+    margin:0;
+    background:#0f172a;
+    color:white;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:40px;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.card{
+    background:#1e293b;
+    border-radius:15px;
+    padding:30px;
+    box-shadow:0 0 20px rgba(0,0,0,.3);
+}
+
+.info{
+    display:flex;
+    justify-content:space-between;
+    padding:15px 0;
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.label{
+    color:#94a3b8;
+}
+
+.value{
+    font-size:22px;
+    font-weight:bold;
+}
+
+.buy{
+    color:#22c55e;
+}
+
+.sell{
+    color:#ef4444;
+}
+
+.hold{
+    color:#facc15;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🤖 AI Signals</h1>
+
+<div class="card">
+
+<div class="info">
+<span class="label">Par</span>
+<span id="pair" class="value">---</span>
+</div>
+
+<div class="info">
+<span class="label">Sinal</span>
+<span id="signal" class="value">---</span>
+</div>
+
+<div class="info">
+<span class="label">Preço</span>
+<span id="price" class="value">---</span>
+</div>
+
+<div class="info">
+<span class="label">Confiança</span>
+<span id="confidence" class="value">---</span>
+</div>
+
+<div class="info">
+<span class="label">Tendência</span>
+<span id="trend" class="value">---</span>
+</div>
+
+<div class="info">
+<span class="label">Atualizado</span>
+<span id="updated" class="value">---</span>
+</div>
+
+</div>
+
+</div>
+
+<script type="module">
+
+import { db } from "../js/firebase.js";
+
+import {
+doc,
+onSnapshot
+
+} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+
+const pair=document.getElementById("pair");
+const signal=document.getElementById("signal");
+const price=document.getElementById("price");
+const confidence=document.getElementById("confidence");
+const trend=document.getElementById("trend");
+const updated=document.getElementById("updated");
+
+onSnapshot(doc(db,"signals","current"),(snapshot)=>{
+
+if(!snapshot.exists()) return;
+
+const data=snapshot.data();
+
+pair.textContent=data.pair;
+price.textContent=data.price;
+confidence.textContent=data.confidence+"%";
+trend.textContent=data.trend;
+updated.textContent=new Date(data.updated.seconds*1000).toLocaleString();
+
+signal.textContent=data.action;
+
+signal.className="value";
+
+if(data.action==="BUY")
+signal.classList.add("buy");
+
+else if(data.action==="SELL")
+signal.classList.add("sell");
+
+else
+signal.classList.add("hold");
+
+});
+
+</script>
+
+</body>
+</html>
