@@ -1,23 +1,18 @@
 import { db } from "./firebase.js";
 
 import {
+    doc,
     collection,
     onSnapshot
 } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
 
-import {
-    doc
-} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
-
+// ==========================
 // DASHBOARD
+// ==========================
+
 const dashboardRef = doc(db, "dashboard", "main");
 
 onSnapshot(dashboardRef, (snapshot) => {
-    console.log("Quantidade de trades:", snapshot.size);
-
-snapshot.forEach(doc => {
-    console.log(doc.id, doc.data());
-});
 
     if (!snapshot.exists()) return;
 
@@ -28,15 +23,11 @@ snapshot.forEach(doc => {
     if (cards.length < 4) return;
 
     cards[0].innerHTML = "€" + Number(data.balance).toLocaleString();
-
     cards[1].innerHTML = "+€" + Number(data.profit).toFixed(2);
-
     cards[2].innerHTML = data.openTraders;
-
     cards[3].innerHTML = data.winRate + "%";
 
 });
-
 
 // ==========================
 // AI SIGNAL
@@ -63,53 +54,63 @@ onSnapshot(signalRef, (snapshot) => {
         signal.trend;
 
 });
+
+// ==========================
+// TRADES
+// ==========================
+
 const tradesRef = collection(db, "trades");
 
-onSnapshot(
-    tradesRef,
-    (snapshot) => {
-        console.log(snapshot);
-        console.log(snapshot.constructor.name);
-        console.log(snapshot.size);
-    },
-    (error) => {
-        console.error("Erro Firestore:", error);
-    }
-);
+onSnapshot(tradesRef, (snapshot) => {
+
+    console.log("Trades encontrados:", snapshot.size);
 
     const list = document.getElementById("tradesList");
-const historyList = document.getElementById("historyList");
-    
-    list.innerHTML = "";
-     historyList.innerHTML = "";
+    const historyList = document.getElementById("historyList");
+
+    if (list) list.innerHTML = "";
+    if (historyList) historyList.innerHTML = "";
+
     snapshot.forEach((doc) => {
 
         const trade = doc.data();
-      if (trade.status === "OPEN") {
-        
-        list.innerHTML += `
+
+        // ==========================
+        // OPEN TRADES
+        // ==========================
+
+        if (trade.status === "OPEN" && list) {
+
+            list.innerHTML += `
 <div class="trade-card">
 
     <h3 style="color:${trade.action === 'BUY' ? '#22c55e' : '#ef4444'}">
-    ${trade.action} ${trade.pair}
-</h3>
+        ${trade.action} ${trade.pair}
+    </h3>
 
     <p><strong>Entry:</strong> ${trade.entry}</p>
-
     <p><strong>Stop Loss:</strong> ${trade.sl}</p>
-
     <p><strong>Take Profit:</strong> ${trade.tp}</p>
-
     <p><strong>Profit:</strong> €${trade.profit}</p>
 
-    <p><strong>Status:</strong> <span style="color:${trade.status === 'OPEN' ? '#22c55e' : '#ef4444'};font-weight:bold;">${trade.status}</span></p>
+    <p>
+        <strong>Status:</strong>
+        <span style="color:#22c55e;font-weight:bold;">
+            ${trade.status}
+        </span>
+    </p>
 
 </div>
 `;
-      }
-if (trade.status === "CLOSED") {
+        }
 
-historyList.innerHTML += `
+        // ==========================
+        // HISTORY
+        // ==========================
+
+        if (trade.status === "CLOSED" && historyList) {
+
+            historyList.innerHTML += `
 
 <div class="trade-card closed-card">
 
@@ -117,10 +118,8 @@ historyList.innerHTML += `
 
         <div>
 
-            <span style="color:${trade.action==="BUY" ? "#22c55e" : "#ef4444"};font-weight:bold;">
-
+            <span style="color:${trade.action === "BUY" ? "#22c55e" : "#ef4444"};font-weight:bold;">
                 ${trade.action}
-
             </span>
 
             <strong>${trade.pair}</strong>
@@ -128,9 +127,7 @@ historyList.innerHTML += `
         </div>
 
         <span class="closed">
-
             CLOSED
-
         </span>
 
     </div>
@@ -138,55 +135,35 @@ historyList.innerHTML += `
     <div class="trade-grid">
 
         <div>
-
             <small>Entry</small>
-
             <strong>${trade.entry}</strong>
-
         </div>
 
         <div>
-
             <small>Exit</small>
-
             <strong>${trade.exitPrice ?? "-"}</strong>
-
         </div>
 
         <div>
-
             <small>Stop Loss</small>
-
             <strong>${trade.sl}</strong>
-
         </div>
 
         <div>
-
             <small>Take Profit</small>
-
             <strong>${trade.tp}</strong>
-
         </div>
 
         <div>
-
             <small>Profit</small>
-
-            <strong class="${trade.profit>=0?"profit":"loss"}">
-
+            <strong class="${trade.profit >= 0 ? "profit" : "loss"}">
                 €${Number(trade.profit).toFixed(2)}
-
             </strong>
-
         </div>
 
         <div>
-
             <small>Risk</small>
-
             <strong>${trade.risk ?? "-"}</strong>
-
         </div>
 
     </div>
@@ -195,8 +172,12 @@ historyList.innerHTML += `
 
 `;
 
-}
-});
-    
+        }
+
+    });
+
+}, (error) => {
+
+    console.error("Erro Firestore:", error);
 
 });
